@@ -28,7 +28,7 @@ public class Menu
             items[index - 1]?.OnClick();
             Console.WriteLine("Нажмите чтобы продолжить");
             Console.ReadLine();
-
+            Console.Clear();
         }
         catch (Exception e)
         {

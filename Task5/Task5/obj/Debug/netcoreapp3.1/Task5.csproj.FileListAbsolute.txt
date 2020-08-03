@@ -11,3 +11,16 @@ C:\Project\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.pdb
 C:\Project\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.dll
 C:\Project\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.pdb
 C:\Project\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.genruntimeconfig.cache
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.csprojAssemblyReference.cache
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.AssemblyInfoInputs.cache
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.AssemblyInfo.cs
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.csproj.CoreCompileInputs.cache
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.dll
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.pdb
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.exe
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.deps.json
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.runtimeconfig.json
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.runtimeconfig.dev.json
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.dll
+C:\Project\WorkingTasks\Task5\Task5\bin\Debug\netcoreapp3.1\Task5.pdb
+C:\Project\WorkingTasks\Task5\Task5\obj\Debug\netcoreapp3.1\Task5.genruntimeconfig.cache

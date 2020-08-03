@@ -6,18 +6,27 @@ namespace Task5
 {
     public class Skeleton : Monster
     {
-        public Skeleton(int health, int damage, Armor armor, string name) : base(health, damage, armor, name)
+        public Skeleton(int health, int damage, Armor armor, string name, params IItem[] items) : base(health, damage, armor, name, items)
         {
         }
 
         public override int Hit()
         {
-            return base.Hit();
+            var damage = Random.Range(Damage, 3);
+            ConsoleLogger.Log($"Скелет { Name} нанес удар в {damage} очков атаки");
+            return damage;
         }
 
         public override void SetDamage(int damage)
         {
-            base.SetDamage(damage);
+            damage = Armor.Blocking(damage);
+            Health -= damage;
+            ConsoleLogger.Log($"Скелет { Name} получил удар в {damage} очков атаки");
+            if (Health <= 0)
+            {
+                Dead();
+            }
+
         }
 
         public override string ToString()

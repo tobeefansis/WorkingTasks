@@ -13,7 +13,7 @@ namespace Task5
         const char upRigth = '╗';
         const char downRight = '╝';
         const char vertical = '║';
-        const char horithontal = '=';
+        const char horithontal = '═';
 
 
 
