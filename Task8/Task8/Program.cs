@@ -3,160 +3,204 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task5;
 
 namespace Task8
 {
     class Program
     {
-        /*     Main
-         • Создать игроков(с произвольными никнеймами, уровнем и расой)
-         • Создать базу данных
-         • Добавить игроков в базу данных
-         [LINQ]
-         Сформировать из игроков, находящихся в базе данных, следующие выборки:
-         • Игроки одной расы(любая произвольная раса из существующих)
-         • Игроки больше X уровня.X выбрать произвольно.
-         • Игроки, чьи ники начинаются с определенной (произвольной) буквы
-         • Игроки расы X с уровнем не больше чем A и игроки расы Y с уровнем не больше чем B.A, B, X, Y выбрать на свое усмотрение.*/
         static Random r = new Random();
         static void Main(string[] args)
         {
+            Menu menu = new Menu(
+                new MenuItem("Task-1", Task1),
+                new MenuItem("Task-2", Task2),
+                new MenuItem("Task-3", Task3),
+                new MenuItem("Task-4", Task4)
+                );
+
+        }
+        static Action CreateAction()
+        {
+            int count = 0;
+            return () =>
+           {
+               count++;
+               Console.WriteLine("Count = {0}", count);
+           };
+
+        }
+        private static void Task4()
+        {
+
+
+            var action = CreateAction();
+
+            action();
+            action();
+            action();
+            action();
+            action();
+            action();
+        }
+
+        private static void Task3()
+        {
+
             Race ork = new Race("ОРК");
             Race Elf = new Race("Elf");
             Race Zombie = new Race("Zombie");
 
             DataBase dataBase = new DataBase(15);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 dataBase.AddPlayers(
-                    new Player("1" + r.Next(), 10, ork),
-                    new Player("s" + r.Next(), 10, Elf),
-                    new Player("d" + r.Next(), 10, Zombie),
+                    new Player("1" + r.Next(), 9, ork),
+                    new Player("s" + r.Next(), 17, Elf),
+                    new Player("d" + r.Next(), 20, Zombie),
                     new Player("s" + r.Next(), 10, Zombie),
-                    new Player("b" + r.Next(), 10, ork)
+                    new Player("b" + r.Next(), 4, ork)
                     ); ;
             }
+            ConsoleLogger.StartBlock();
+            ConsoleLogger.LogCenter("Список всех игроковю");
+            dataBase.players.ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+            ConsoleLogger.StartBlock();
 
-
+            ConsoleLogger.LogCenter("Игроки одной расы (любая произвольная раса из существующих).");
             dataBase.players
-                .Where(n => n.race.Name == ork.Name)
+                .Where(n => n.race == ork)
                 .ToList()
-                .ForEach(n => Console.WriteLine(n));
+                .ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+            ConsoleLogger.StartBlock();
+
+            ConsoleLogger.LogCenter("Игроки больше X уровня. X выбрать произвольно.");
             dataBase.players
                 .Where(n => n.Age > 10)
                 .ToList()
-                .ForEach(n => Console.WriteLine(n));
+                .ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+            ConsoleLogger.StartBlock();
+            ConsoleLogger.LogCenter("Игроки, чьи ники начинаются с определенной (произвольной) буквы.");
             dataBase.players
                .Where(n => n.Name[0] == 's')
                .ToList()
-               .ForEach(n => Console.WriteLine(n));
-            int a = 10;
-            int b = 10;
+               .ForEach(ConsoleLogger.Log);
 
+            int a = 7;
+            int b = 20;
+            ConsoleLogger.EndBlock();
+            ConsoleLogger.StartBlock();
+            ConsoleLogger.Log($"Игроки расы X с уровнем не больше чем A " +
+                $"и игроки расы Y с уровнем не больше чем B. A, B, X, Y выбрать на свое усмотрение.");
+            ConsoleLogger.Log($"A={a}, B={b}, X={ork}, Y={Elf}");
             dataBase.players
-           .Where(n => (n.Age < a && n.race.Name == ork.Name) || (n.Age < b && n.race.Name == Elf.Name))
-           .ToList()
-           .ForEach(n => Console.WriteLine(n));
-
+               .Where(n => (n.Age < a && n.race == ork) || (n.Age < b && n.race == Elf))
+               .ToList()
+               .ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
         }
-    }
-}
-struct Race
-{
-    public string Name { get; }
-
-    public Race(string name)
-    {
-        Name = name;
-    }
 
 
-    public override string ToString()
-    {
-        return Name;
-    }
-}
-class Player
-{
-    public string Name;
-    public int Age;
-    public Race race;
 
-    public Player(string name, int age, Race race)
-    {
-        Name = name;
-        Age = age;
-        this.race = race;
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Player player &&
-               Name == player.Name &&
-               Age == player.Age &&
-               EqualityComparer<Race>.Default.Equals(race, player.race);
-    }
-
-    public override int GetHashCode()
-    {
-        int hashCode = -1907464294;
-        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-        hashCode = hashCode * -1521134295 + Age.GetHashCode();
-        hashCode = hashCode * -1521134295 + race.GetHashCode();
-        return hashCode;
-    }
-
-    public override string ToString()
-    {
-        return $"{Name} age - {Age} race - {race}";
-    }
-}
-class DataBase
-{
-    public int maxCount;
-    public List<Player> players = new List<Player>();
-
-    public DataBase(int maxCount)
-    {
-        this.maxCount = maxCount;
-    }
-
-    public void AddPlayers(params Player[] player)
-    {
-        foreach (var item in player)
+        private static void Task2()
         {
-            AddPlayer(item);
-        }
-    }
 
-    public void AddPlayer(Player player)
-    {
-        if (players.Count < maxCount && !IsNickNameExists(player.Name))
-        {
-            players.Add(player);
+            string[] emails = new string[]
+            {
+            "randommail@mail.ru",
+            "someoneshere@gmail.by",
+            "jackteller@gmail.com",
+            "yellow.brick.records@mail.cz",
+            "randommail2@mail.ru",
+            "kidywalters999@gmail.com",
+            "mail.trueman@mail.cz",
+            "sol.goodman@gmail.com",
+            "alfick.demon.44@mail.gv.cz"
+            };
+            ConsoleLogger.StartBlock();
+            ConsoleLogger.LogCenter("Список всех");
+            emails.ToList().ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+            var t = emails
+                .Where(n => GetRegex(n) != "")
+                .Select(n => GetRegex(n)
+            ).Distinct().ToList();
+            ConsoleLogger.StartBlock();
+            t.ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
         }
-        else
-        {
-            Console.WriteLine($"Такой ник уже есть или не хватает места- {player.Name}");
-        }
-    }
 
-    bool IsNickNameExists(string nickname)
-    {
-        return players.Where(n => n.Name == nickname).ToList().Count != 0;
+        static string GetRegex(string text)
+        {
+            int index = text.LastIndexOf('@');
+
+            return text.Substring(index, text.Length - index);
+        }
+
+        private static void Task1()
+        {
+            /*  Объявить тип User содержащий:
+              • Имя пользователя
+              • Возраст
+              • Почтовый адрес
+              • Конструктор с параметрами
+
+              Создать коллекцию из 5 пользователей
+
+              [Использовать LINQ]
+              Создать List<User>, в который добавить только пользователей старше 13 лет и почтовые ящики у которых содержат символ @*/
+            List<User> users = new List<User>()
+            {
+                new User("user 1",10,"asd@asd*a/d"),
+                new User("user 2",30,"asdasdad"),
+                new User("user 3",14,"asdas*dad"),
+                new User("user 4",2,"asdasdad"),
+                new User("user 5",7,"asdasdad")
+            };
+            ConsoleLogger.StartBlock();
+            ConsoleLogger.LogCenter("Список всех");
+            users.ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+
+            var select = users
+                .Where(n => n.Age > 13 &&
+                (n.PostalAddress.Contains("@") || n.PostalAddress.Contains("*") || n.PostalAddress.Contains("/"))
+                )
+                .ToList();
+            ConsoleLogger.StartBlock();
+            select.ForEach(ConsoleLogger.Log);
+            ConsoleLogger.EndBlock();
+
+        }
+        class User
+        {
+            string name;
+            int age;
+            string postalAddress;
+
+            public override string ToString()
+            {
+                return $"name {name}, age {age}, postal address {postalAddress}";
+            }
+
+            public User(string name, int age, string postalAddress)
+            {
+                this.Name = name;
+                this.Age = age;
+                this.PostalAddress = postalAddress;
+            }
+
+            public string Name { get => name; set => name = value; }
+            public int Age { get => age; set => age = value; }
+            public string PostalAddress { get => postalAddress; set => postalAddress = value; }
+        }
     }
 }
 
-/*
-    Создать класс DataBase
-    [Информация] Модификаторы доступа и сигнатуру(поле или свойство) выбрать на свое усмотрение
-    • Максимальный размер базы данных(целое число)
-    • Коллекция для хранения объектов типа Player
-    • Конструктор, инициализирующий максимальный размер базы данных
-    • Открытый метод void AddPlayers(X) для добавления игроков.Вместо X — возможность принимать в качестве параметра любое количество объектов типа Player.
-        • Учесть в базе данных возможность нехватки места (превышение макс. размера базы)
-        • Учесть возможность наличия такого никнейма в базе до его добавления(реализовать с использованием следующего метода)
-    • Закрытый метод bool IsNickNameExists(string nickname) возвращающий true если такой ник уже есть в базе, false - иначе
 
-   
-*/
+
+
+
